@@ -1,6 +1,6 @@
 {
-    "extends": ["react-app", "react-app/jest", "prettier"],
-    "plugins": ["prettier"],
+    "extends": ["react-app", "react-app/jest", "prettier", "eslint-config-prettier"],
+    "plugins": ["prettier", "eslint-plugin-prettier"],
     "rules": {
         "import/first": 0,
         "prettier": ["error", { "singleQuote": true}]
@@ -10,5 +10,5 @@
         "node": true,
         "es6"
     },
-    "parser": "babel-eslint"
+    "parser": "@babel/eslint-parser"
 }
