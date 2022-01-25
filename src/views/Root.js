@@ -1,22 +1,18 @@
-import logo from 'assets/logo.svg';
-import UsersList from 'components/UsersList/UsersList';
+import UsersList from 'components/organisms/UsersList/UsersList';
 import { users } from 'data/users';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  background-color: #f7f8fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-`;
+import styled, { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from 'assets/styles/globalStyle';
+import { theme } from 'assets/styles/theme';
+import { Wrapper } from './Root.styles';
 
 const Root = () => {
   return (
-    <Wrapper>
-      <UsersList />
-    </Wrapper>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Wrapper>
+        <UsersList />
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 
