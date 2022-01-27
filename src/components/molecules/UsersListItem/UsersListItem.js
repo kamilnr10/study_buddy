@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button } from 'components/atoms/Button/Button';
+import { DeleteButton } from 'components/atoms/DeleteButton/DeleteButton';
 import { Wrapper, StyledAverage, StyledInfo } from './UsersListItem.styles';
 
 const UsersListItem = ({ deleteUser, userData: { average, name, attendance = '0%' } }) => {
@@ -12,7 +12,7 @@ const UsersListItem = ({ deleteUser, userData: { average, name, attendance = '0%
         <p>{name}</p>
         <p>{attendance}</p>
       </StyledInfo>
-      <Button onClick={() => deleteUser(name)} />
+      <DeleteButton onClick={() => deleteUser(name)} />
     </Wrapper>
   );
 };

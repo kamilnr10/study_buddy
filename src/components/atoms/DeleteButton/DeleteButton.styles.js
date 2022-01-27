@@ -6,10 +6,15 @@ export const StyledButton = styled.button`
   align-items: center;
   width: 25px;
   height: 25px;
-  background-color: ${({ theme }) => theme.colors.grey};
+  /* background-color: ${({ theme }) => theme.colors.grey}; */
   border-radius: 50px;
   border: none;
   color: white;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 
   svg {
     width: 20px;
