@@ -5,9 +5,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'assets/styles/globalStyle';
 import { theme } from 'assets/styles/theme';
 import { Wrapper } from './Root.styles';
-import Form from 'components/organisms/Form/Form';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { MainTemplate } from 'components/templates/MainTemplate/MainTemplate';
+import AddUser from 'views/AddUser.js';
+import Dashboard from 'views/Dashboard';
 
 const mockAPI = (succes) => {
   return new Promise((resolve, reject) => {
@@ -75,10 +76,10 @@ const Root = () => {
         <MainTemplate>
           <Wrapper>
             <Routes>
-              <Route path="/" exact element={<UsersList deleteUser={deleteUser} users={users} isLoading={isLoading} />} />
+              <Route path="/" exact element={<Dashboard deleteUser={deleteUser} users={users} isLoading={isLoading} />} />
               <Route
                 path="/add-user"
-                element={<Form formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />}
+                element={<AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />}
               />
             </Routes>
           </Wrapper>

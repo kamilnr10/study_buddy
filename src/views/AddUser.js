@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { users as usersData } from 'data/users';
 import UsersListItem from 'components/molecules/UsersListItem/UsersListItem';
 import { Wrapper, StyledList, StyledTitle } from 'components/organisms/UsersList//UsersList.styles';
 import { FormField } from 'components/molecules/FormField/FormField';
 import styled from 'styled-components';
 import { Button } from 'components/atoms/Button/Button';
+import { UserShape } from 'types/UserShape';
 
 const FormWrapper = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const FormWrapper = styled.div`
   width: 90%;
 `;
 
-const Form = ({ handleAddUser, formValues, handleInputChange }) => {
+const AddUser = ({ handleAddUser, formValues, handleInputChange }) => {
   return (
     <FormWrapper>
       <Wrapper as="form" onSubmit={handleAddUser}>
@@ -28,4 +30,10 @@ const Form = ({ handleAddUser, formValues, handleInputChange }) => {
   );
 };
 
-export default Form;
+AddUser.propTypes = {
+  handleAddUser: PropTypes.func.isRequired,
+  formValues: PropTypes.shape(UserShape),
+  handleInputChange: PropTypes.func.isRequired,
+};
+
+export default AddUser;

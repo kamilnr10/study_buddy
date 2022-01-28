@@ -29,12 +29,15 @@ const NavWrapper = styled.nav`
   border-top: 1px solid ${({ theme }) => theme.colors.darkPurple};
 
   a {
-    width: 30px;
+    width: 50px;
     height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
   }
 `;
 
