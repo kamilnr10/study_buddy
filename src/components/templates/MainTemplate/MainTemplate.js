@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as AddUserIcon } from 'assets/icons/adduser.svg';
 import { ReactComponent as DashboardIcon } from 'assets/icons/dashboard.svg';
 import addUser from 'assets/icons/add-user.png';
@@ -29,8 +29,8 @@ const NavWrapper = styled.nav`
   border-top: 1px solid ${({ theme }) => theme.colors.darkPurple};
 
   a {
-    width: 50px;
-    height: 30px;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,6 +38,30 @@ const NavWrapper = styled.nav`
   img {
     width: 35px;
     height: 35px;
+  }
+`;
+
+const activeClassName = 'active';
+
+const StyledLink = styled(NavLink)`
+  position: relative;
+
+  &.${activeClassName} {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &::after {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: 0;
+    right: 0;
+    background-color: ${({ theme }) => theme.colors.pink};
   }
 `;
 
@@ -54,18 +78,18 @@ const Dashboard = styled(DashboardIcon)`
 const Navigation = () => {
   return (
     <NavWrapper>
-      <Link to="/">
+      <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/">
         <img src={dashboard} alt="" />
-      </Link>
-      <Link to="/add-user">
+      </StyledLink>
+      <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/add-user">
         <img src={addUser} alt="" />
-      </Link>
-      <Link to="/settings">
+      </StyledLink>
+      <StyledLink to="/settings">
         <img src={settings} alt="" />
-      </Link>
-      <Link to="/logout">
+      </StyledLink>
+      <StyledLink to="/logout">
         <img src={logout} alt="" />
-      </Link>
+      </StyledLink>
     </NavWrapper>
   );
 };
@@ -92,7 +116,10 @@ const MainBar = styled.div`
 const NavigationTop = () => {
   return (
     <MainBar>
-      <h4>Study buddy</h4>
+      <h4>
+        Study
+        <br /> buddy
+      </h4>
       <img src={search} alt="" />
     </MainBar>
   );
