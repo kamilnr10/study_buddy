@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as AddUserIcon } from 'assets/icons/adduser.svg';
@@ -7,7 +7,8 @@ import addUser from 'assets/icons/add-user.png';
 import dashboard from 'assets/icons/personal-computer.png';
 import settings from 'assets/icons/settings.png';
 import logout from 'assets/icons/logout.png';
-import search from 'assets/icons/search.png';
+import card from 'assets/icons/card.png';
+import { SearchNav } from 'components/organisms/SearchBar/SearchBar';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -27,6 +28,7 @@ const NavWrapper = styled.nav`
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid ${({ theme }) => theme.colors.darkPurple};
+  background-color: ${({ theme }) => theme.colors.lightGrey};
 
   a {
     width: 100%;
@@ -81,6 +83,9 @@ const Navigation = () => {
       <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/">
         <img src={dashboard} alt="" />
       </StyledLink>
+      <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/news">
+        <img src={card} alt="" />
+      </StyledLink>
       <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/add-user">
         <img src={addUser} alt="" />
       </StyledLink>
@@ -94,41 +99,10 @@ const Navigation = () => {
   );
 };
 
-const MainBar = styled.div`
-  width: 100%;
-  height: 55px;
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h4 {
-    margin: 0 15px;
-  }
-
-  img {
-    width: 35px;
-    height: 35px;
-    margin: 0 15px;
-  }
-`;
-
-const NavigationTop = () => {
-  return (
-    <MainBar>
-      <h4>
-        Study
-        <br /> buddy
-      </h4>
-      <img src={search} alt="" />
-    </MainBar>
-  );
-};
-
 export const MainTemplate = ({ children }) => {
   return (
     <Wrapper>
-      <NavigationTop />
+      <SearchNav />
       {children}
       <Navigation />
     </Wrapper>

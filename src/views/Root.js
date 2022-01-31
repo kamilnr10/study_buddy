@@ -10,22 +10,24 @@ import { MainTemplate } from 'components/templates/MainTemplate/MainTemplate';
 import AddUser from 'views/AddUser.js';
 import Dashboard from 'views/Dashboard';
 import UsersProvider from 'providers/UsersProvider';
+import NewsSection from 'components/templates/NewsSection/NewsSection';
 
 const Root = () => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <MainTemplate>
-          <UsersProvider>
+        <UsersProvider>
+          <MainTemplate>
             <Wrapper>
               <Routes>
                 <Route path="/" exact element={<Dashboard />} />
                 <Route path="/add-user" element={<AddUser />} />
+                <Route path="/news" element={<NewsSection />} />
               </Routes>
             </Wrapper>
-          </UsersProvider>
-        </MainTemplate>
+          </MainTemplate>
+        </UsersProvider>
       </ThemeProvider>
     </Router>
   );

@@ -10,6 +10,7 @@ export const UsersContext = React.createContext({
 
 const UsersProvider = ({ children }) => {
   const [users, setUsers] = useState(usersData);
+  const [searchBar, setSearchBar] = useState(false);
 
   const deleteUser = (name) => {
     const filteredUsers = users.filter((user) => user.name !== name);
@@ -26,12 +27,19 @@ const UsersProvider = ({ children }) => {
     setUsers([newUser, ...users]);
   };
 
+  const handleSearchBar = () => {
+    console.log('klik');
+    setSearchBar(!searchBar);
+  };
+
   return (
     <UsersContext.Provider
       value={{
         users,
         handleAddUser,
         deleteUser,
+        searchBar,
+        handleSearchBar,
       }}
     >
       {children}
