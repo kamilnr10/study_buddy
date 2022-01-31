@@ -15,11 +15,11 @@ const Wrapper = styled.div`
   }
 `;
 
-export const FormField = ({ onChange, value, label, name, id, type = 'text' }) => {
+export const FormField = ({ onChange, value, checked, label, name, id, type = 'text' }) => {
   return (
     <Wrapper>
       <Label htmlFor={id}>{label}</Label>
-      <Input name={name} id={id} type={type} onChange={onChange} value={value} data-testid={label} />
+      <Input name={name} id={id} type={type} onChange={onChange} checked={checked} value={value} data-testid={label} />
     </Wrapper>
   );
 };
