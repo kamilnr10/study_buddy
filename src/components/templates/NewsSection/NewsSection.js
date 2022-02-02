@@ -139,7 +139,7 @@ const NewsSection = () => {
         }
       )
       .then(({ data: { data } }) => setArticles(data.allArticles))
-      .catch(() => setError(`Sorry, we couldn't loard articles`));
+      .catch(() => setError(`Sorry , we couldn't loard articles`));
   }, []);
 
   return (
@@ -147,8 +147,8 @@ const NewsSection = () => {
       <NewsSectionHeader>News Section</NewsSectionHeader>
       <NewsWrapper>
         {articles.length > 0 ? (
-          articles.map(({ title, category, content, image = null }) => (
-            <ArticleWrapper key={title}>
+          articles.map(({ id, title, category, content, image = null }) => (
+            <ArticleWrapper key={id}>
               <TitleWrapper>
                 <h3>{title}</h3>
                 <p>{category}</p>
