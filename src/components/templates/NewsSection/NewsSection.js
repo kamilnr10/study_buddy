@@ -58,8 +58,9 @@ export const ArticleWrapper = styled(ViewWrapper)`
 export const ContentWrapper = styled.div`
   img {
     width: 100%;
-    height: 140px;
+    min-height: 130px;
     max-height: 360px;
+    max-width: 360px;
     object-fit: cover;
   }
 `;
@@ -108,8 +109,10 @@ const API_TOKEN = '7cd8cf80a54919f0e2dbf2480379b0';
 
 const NewsSection = () => {
   const [articles, setArticles] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_DATOCMS_TOKEN);
     axios
       .post(
         'https://graphql.datocms.com',
@@ -136,8 +139,8 @@ const NewsSection = () => {
         }
       )
       .then(({ data: { data } }) => setArticles(data.allArticles))
-      .catch((err) => console.log(err));
-  });
+      .catch(() => setError(`Sorry, we couldn't loard articles`));
+  }, []);
 
   return (
     <Wrapper>
@@ -158,7 +161,7 @@ const NewsSection = () => {
             </ArticleWrapper>
           ))
         ) : (
-          <TitleWrapper>Loading ...</TitleWrapper>
+          <TitleWrapper>{error ? error : 'Loading ...'}</TitleWrapper>
         )}
       </NewsWrapper>
     </Wrapper>
