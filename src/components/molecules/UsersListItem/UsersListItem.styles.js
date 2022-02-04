@@ -5,6 +5,7 @@ export const Wrapper = styled.li`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 0;
 
   &:not(:last-child)::after {
     content: '';
@@ -16,25 +17,8 @@ export const Wrapper = styled.li`
   }
 `;
 
-export const StyledAverage = styled.div`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  color: ${({ theme }) => theme.colors.white};
-  font-weight: bold;
-  background: ${({ theme, value }) => {
-    if (value > 4) return theme.colors.success;
-    if (value > 3) return theme.colors.warning;
-    if (value > 2) return theme.colors.error;
-    return theme.colors.grey;
-  }};
-`;
-
 export const StyledInfo = styled.div`
+  width: 100%;
   padding: 25px 20px;
   p {
     margin: 0;
@@ -49,4 +33,22 @@ export const StyledInfo = styled.div`
   p:last-child {
     font-size: ${({ theme }) => theme.fontSize.s};
   }
+`;
+
+export const StyledAverage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.white};
+  font-weight: bold;
+  background: ${({ theme, value }) => {
+    if (value > 4) return theme.colors.success;
+    if (value > 3) return theme.colors.warning;
+    if (value > 2) return theme.colors.error;
+    return theme.colors.grey;
+  }};
 `;

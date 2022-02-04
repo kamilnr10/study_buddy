@@ -4,7 +4,8 @@ export const ViewWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   width: 90%;
   max-width: 500px;
-  padding: 40px 20px;
+  max-height: 480px;
+  padding: 30px 20px;
   border-radius: 25px;
   box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.3);
 `;

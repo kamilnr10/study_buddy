@@ -1,8 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { UsersContext } from 'providers/UsersProvider';
 import { Input } from 'components/atoms/Input/Input';
+import { useStudents } from 'hooks/useStudents';
 import search from 'assets/icons/search.png';
+import debounce from 'lodash.debounce';
+
+const SearchList = styled.ul`
+  visibility: 'visible';
+  z-index: 1000;
+  max-height: 140px;
+  overflow-y: scroll;
+  padding: 10px;
+  border-radius: 15px;
+  list-style: none;
+  width: 160px;
+  position: absolute;
+  left: 80px;
+  top: 35px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.3);
+
+  li {
+    font-size: ${({ theme }) => theme.fontSize.m};
+    font-weight: bold;
+    color: ${({ theme }) => theme.colors.darkGrey};
+    background-color: white;
+    width: 100%;
+    padding: 20px 5px;
+    z-index: 9999;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.lightPurple};
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid ${({ theme }) => theme.colors.darkPurple};
+    }
+  }
+`;
 
 const MainBar = styled.div`
   width: 100%;
@@ -35,7 +71,19 @@ const MainBar = styled.div`
 `;
 
 export const SearchNav = () => {
-  const { searchBar, handleSearchBar } = useContext(UsersContext);
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [matchingStudents, setMatchingStudents] = useState('');
+  const { findStudents } = useStudents();
+
+  const getMatchingStudents = debounce(async (e) => {
+    const { students } = await findStudents(searchPhrase);
+    setMatchingStudents(students);
+  }, 500);
+
+  useEffect(() => {
+    if (!searchPhrase) return;
+    getMatchingStudents(searchPhrase);
+  }, [searchPhrase, getMatchingStudents]);
 
   return (
     <MainBar>
@@ -43,8 +91,15 @@ export const SearchNav = () => {
         Study
         <br /> buddy
       </h4>
-      {searchBar ? <Input /> : null}
-      <button onClick={handleSearchBar}>
+      <Input onChange={(e) => setSearchPhrase(e.target.value)} value={searchPhrase} />
+      {searchPhrase && matchingStudents.length ? (
+        <SearchList>
+          {matchingStudents.map((student) => (
+            <li key={student.id}>{student.name}</li>
+          ))}
+        </SearchList>
+      ) : null}
+      <button>
         <img src={search} alt="" />
       </button>
     </MainBar>

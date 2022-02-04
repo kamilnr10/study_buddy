@@ -80,7 +80,7 @@ const Dashboard = styled(DashboardIcon)`
 const Navigation = () => {
   return (
     <NavWrapper>
-      <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/">
+      <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/groups/A">
         <img src={dashboard} alt="" />
       </StyledLink>
       <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/news">
