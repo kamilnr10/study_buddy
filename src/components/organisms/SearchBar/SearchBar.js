@@ -4,9 +4,10 @@ import { Input } from 'components/atoms/Input/Input';
 import { useStudents } from 'hooks/useStudents';
 import search from 'assets/icons/search.png';
 import debounce from 'lodash.debounce';
+import { useCombobox } from 'downshift';
 
 const SearchList = styled.ul`
-  visibility: 'visible';
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   z-index: 1000;
   max-height: 140px;
   overflow-y: scroll;
@@ -21,23 +22,6 @@ const SearchList = styled.ul`
   flex-direction: column;
   background-color: white;
   box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.3);
-
-  li {
-    font-size: ${({ theme }) => theme.fontSize.m};
-    font-weight: bold;
-    color: ${({ theme }) => theme.colors.darkGrey};
-    background-color: white;
-    width: 100%;
-    padding: 20px 5px;
-    z-index: 9999;
-
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.lightPurple};
-    }
-    &:not(:last-child) {
-      border-bottom: 1px solid ${({ theme }) => theme.colors.darkPurple};
-    }
-  }
 `;
 
 const MainBar = styled.div`
@@ -50,6 +34,10 @@ const MainBar = styled.div`
 
   h4 {
     margin: 0 15px;
+  }
+
+  div {
+    display: flex;
   }
 
   ${Input} {
@@ -70,20 +58,37 @@ const MainBar = styled.div`
   }
 `;
 
+const SearchResultItem = styled.li`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: bold;
+  color: ${({ theme, isHighlighted }) => (isHighlighted ? theme.colors.white : theme.colors.darkGrey)};
+  background-color: ${({ theme, isHighlighted }) => (isHighlighted ? theme.colors.darkGrey : 'white')};
+  width: 100%;
+  padding: 20px 5px;
+  z-index: 9999;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightPurple};
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid ${({ theme }) => theme.colors.darkPurple};
+  }
+`;
+
 export const SearchNav = () => {
   const [searchPhrase, setSearchPhrase] = useState('');
-  const [matchingStudents, setMatchingStudents] = useState('');
+  const [matchingStudents, setMatchingStudents] = useState([]);
   const { findStudents } = useStudents();
 
-  const getMatchingStudents = debounce(async (e) => {
-    const { students } = await findStudents(searchPhrase);
+  const getMatchingStudents = debounce(async ({ inputValue }) => {
+    const { students } = await findStudents(inputValue);
     setMatchingStudents(students);
   }, 500);
 
-  useEffect(() => {
-    if (!searchPhrase) return;
-    getMatchingStudents(searchPhrase);
-  }, [searchPhrase, getMatchingStudents]);
+  const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
+    items: matchingStudents,
+    onInputValueChange: getMatchingStudents,
+  });
 
   return (
     <MainBar>
@@ -91,22 +96,23 @@ export const SearchNav = () => {
         Study
         <br /> buddy
       </h4>
-      <Input onChange={(e) => setSearchPhrase(e.target.value)} value={searchPhrase} />
-      {searchPhrase && matchingStudents.length ? (
-        <SearchList>
-          {matchingStudents.map((student) => (
-            <li key={student.id}>{student.name}</li>
-          ))}
+      <div {...getComboboxProps()}>
+        <Input {...getInputProps()} name="Search" id="Search" />
+        <SearchList isVisible={isOpen && matchingStudents.length > 0} {...getMenuProps()}>
+          {isOpen &&
+            matchingStudents.map((item, index) => (
+              <SearchResultItem isHighlighted={highlightedIndex === index} {...getItemProps({ item, index })} key={item.id}>
+                {item.name}
+              </SearchResultItem>
+            ))}
         </SearchList>
-      ) : null}
-      <button>
-        <img src={search} alt="" />
-      </button>
+        <button>
+          <img src={search} alt="" />
+        </button>
+      </div>
     </MainBar>
   );
 };
-const SearchBar = () => {
+export const SearchBar = () => {
   return <></>;
 };
-
-export default SearchBar;

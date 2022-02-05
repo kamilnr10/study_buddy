@@ -67,16 +67,6 @@ const StyledLink = styled(NavLink)`
   }
 `;
 
-const AddUser = styled(AddUserIcon)`
-  width: 25px;
-  height: 25px;
-  padding: 5px 0 0;
-`;
-
-const Dashboard = styled(DashboardIcon)`
-  width: 35px;
-  height: 35px;
-`;
 const Navigation = () => {
   return (
     <NavWrapper>
