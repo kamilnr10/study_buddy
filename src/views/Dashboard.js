@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useStudents } from 'hooks/useStudents';
 import useModal from 'components/organisms/Modal/useModal';
 import { Title } from 'components/atoms/Title/Title';
+import Modal from 'components/organisms/Modal/Modal';
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
@@ -12,7 +13,7 @@ const Dashboard = () => {
   const { getGroups, getStudents, getStudentById } = useStudents();
   const { id } = useParams();
   const [currentStudent, setCurrenStudent] = useState([]);
-  const { Modal, isOpen, handleOpenModal, handleCloseModal } = useModal();
+  const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
     (async () => {
@@ -54,17 +55,16 @@ const Dashboard = () => {
 
   return (
     <>
-      <UsersList students={students} groups={groups} handleOpenStudentDetails={handleOpenStudentDetails} />
-      {isOpen ? (
-        <Modal handleCloseModal={handleCloseModal}>
-          <Title>
-            {currentStudent.name} | Group {currentStudent.group}
-          </Title>
-          <p>{currentStudent.attendance}</p>
-          <p>{currentStudent.average}</p>
-          <p></p>
-        </Modal>
-      ) : null}
+      <UsersList students={students} groups={groups} handleOpenStudentDetails={handleOpenStudentDetails} ariaHideApp={false} />
+
+      <Modal isOpen={isOpen} handleCloseModal={handleCloseModal} ariaHideApp={false}>
+        <Title>
+          {currentStudent.name} | Group {currentStudent.group}
+        </Title>
+        <p>{currentStudent.attendance}</p>
+        <p>{currentStudent.average}</p>
+        <p></p>
+      </Modal>
     </>
   );
 };
