@@ -11,7 +11,6 @@ import AddUser from 'views/AddUser.js';
 import Dashboard from 'views/Dashboard';
 import NewsSection from 'components/templates/NewsSection/NewsSection';
 import { useStudents } from 'hooks/useStudents';
-import Modal from 'components/organisms/Modal/Modal';
 
 const Root = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -25,8 +24,6 @@ const Root = () => {
         <GlobalStyle />
         <MainTemplate>
           <Wrapper>
-            {isModalOpen ? <Modal handleClose={() => setModalOpen(false)} /> : null}
-            <button onClick={() => setModalOpen(true)}>Open modal</button>
             <Routes>
               <Route path="/" element={<Navigate replace to="/groups/A" />} />
               <Route path="/groups/:id" element={<Dashboard />} />

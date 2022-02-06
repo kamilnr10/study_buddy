@@ -36,7 +36,7 @@ const GroupWrapper = styled(TitleWrapper)`
   }
 `;
 
-const UsersList = ({ students, groups }) => {
+const UsersList = ({ students, groups, handleOpenStudentDetails }) => {
   // const { users } = useContext(UsersContext);
   const { id } = useParams();
 
@@ -56,7 +56,7 @@ const UsersList = ({ students, groups }) => {
         <Title>Students list</Title>
         <StyledList>
           {students.map((userData) => (
-            <UsersListItem userData={userData} key={userData.id} />
+            <UsersListItem handleOpenStudentDetails={() => handleOpenStudentDetails(userData.id)} userData={userData} key={userData.id} />
           ))}
         </StyledList>
       </StudentsWrapper>

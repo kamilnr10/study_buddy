@@ -23,7 +23,7 @@ const ModalWrapper = styled.div`
 
 const modalContainer = document.getElementById('modal-container');
 
-const Modal = ({ handleClose }) => {
+const Modal = ({ handleCloseModal, children }) => {
   const modalNode = document.createElement('div');
 
   useEffect(() => {
@@ -36,7 +36,8 @@ const Modal = ({ handleClose }) => {
 
   return ReactDOM.createPortal(
     <ModalWrapper>
-      Hello world<Button onClick={handleClose}>Close modal</Button>
+      {children}
+      <Button onClick={handleCloseModal}>Close modal</Button>
     </ModalWrapper>,
     modalNode
   );
