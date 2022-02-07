@@ -46,8 +46,8 @@ const UsersList = ({ students, groups, handleOpenStudentDetails }) => {
         <Title as="h2">Group {id}</Title>
         <nav>
           {groups.map((group) => (
-            <Link key={group} to={`/groups/${group}`}>
-              {group}
+            <Link key={group.id} to={`/groups/${group.id}`}>
+              {group.id}
             </Link>
           ))}
         </nav>

@@ -18,7 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => {
       const groups = await getGroups();
-      // console.log(groups);
+      console.log(groups);
       setGroups(groups);
     })();
   }, [getGroups]);

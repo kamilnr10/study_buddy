@@ -82,7 +82,7 @@ const Navigation = () => {
       <StyledLink to="/settings">
         <img src={settings} alt="" />
       </StyledLink>
-      <StyledLink to="/logout">
+      <StyledLink as="a" onClick={() => localStorage.removeItem('token')}>
         <img src={logout} alt="" />
       </StyledLink>
     </NavWrapper>

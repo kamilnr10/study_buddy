@@ -8,7 +8,7 @@ const actionTypes = {
 };
 
 const reducer = (state, action) => {
-  console.log(action);
+  console.log(action.field);
   const { inputChange, clearValues, consentToggle, throwError, initialValues } = actionTypes;
   switch (action.type) {
     case inputChange:

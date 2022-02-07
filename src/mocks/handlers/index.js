@@ -1,76 +1,82 @@
-import { rest } from 'msw';
-import { students } from 'mocks/data/students';
-import { groups } from 'mocks/data/groups';
-import { db } from 'mocks/db';
+// import { rest } from 'msw';
+// import { students } from 'mocks/data/students';
+// import { groups } from 'mocks/data/groups';
+// import { db } from 'mocks/db';
 
-export const handlers = [
-  rest.get('/groups', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ groups }));
-  }),
-  rest.get('/groups/:id', (req, res, ctx) => {
-    if (req.params.id) {
-      const matchingStudents = db.student.findMany({
-        where: {
-          group: {
-            equals: req.params.id,
-          },
-        },
-      });
-      return res(
-        ctx.status(200),
-        ctx.json({
-          students: matchingStudents,
-        })
-      );
-    } else
-      return res(
-        ctx.status(200),
-        ctx.json({
-          students,
-        })
-      );
-  }),
-  rest.get('/students/:id', (req, res, ctx) => {
-    if (req.params.id) {
-      const matchingStudent = db.student.findFirst({
-        where: {
-          id: {
-            equals: req.params.id,
-          },
-        },
-      });
+import { groups } from 'mocks/handlers/groups';
+import { students } from 'mocks/handlers/students';
+import { auth } from 'mocks/handlers/auth';
 
-      if (!matchingStudent) {
-        return res(
-          ctx.status(404),
-          ctx.json({
-            error: 'No matching student',
-          })
-        );
-      }
-      return res(
-        ctx.status(200),
-        ctx.json({
-          students: matchingStudent,
-        })
-      );
-    } else
-      return res(
-        ctx.status(200),
-        ctx.json({
-          students,
-        })
-      );
-  }),
-  rest.post(`/students/search`, (req, res, ctx) => {
-    const matchingStudents = req.body.searchPhrase
-      ? students.filter((student) => student.name.toLocaleLowerCase().includes(req.body.searchPhrase.toLocaleLowerCase()))
-      : [];
-    return res(
-      ctx.status(200),
-      ctx.json({
-        students: matchingStudents,
-      })
-    );
-  }),
-];
+export const handlers = [...groups, ...students, ...auth];
+
+// export const handlers = [
+//   rest.get('/groups', (req, res, ctx) => {
+//     return res(ctx.status(200), ctx.json({ groups }));
+//   }),
+//   rest.get('/groups/:id', (req, res, ctx) => {
+//     if (req.params.id) {
+//       const matchingStudents = db.student.findMany({
+//         where: {
+//           group: {
+//             equals: req.params.id,
+//           },
+//         },
+//       });
+//       return res(
+//         ctx.status(200),
+//         ctx.json({
+//           students: matchingStudents,
+//         })
+//       );
+//     } else
+//       return res(
+//         ctx.status(200),
+//         ctx.json({
+//           students,
+//         })
+//       );
+//   }),
+//   rest.get('/students/:id', (req, res, ctx) => {
+//     if (req.params.id) {
+//       const matchingStudent = db.student.findFirst({
+//         where: {
+//           id: {
+//             equals: req.params.id,
+//           },
+//         },
+//       });
+
+//       if (!matchingStudent) {
+//         return res(
+//           ctx.status(404),
+//           ctx.json({
+//             error: 'No matching student',
+//           })
+//         );
+//       }
+//       return res(
+//         ctx.status(200),
+//         ctx.json({
+//           students: matchingStudent,
+//         })
+//       );
+//     } else
+//       return res(
+//         ctx.status(200),
+//         ctx.json({
+//           students,
+//         })
+//       );
+//   }),
+//   rest.post(`/students/search`, (req, res, ctx) => {
+//     const matchingStudents = req.body.searchPhrase
+//       ? students.filter((student) => student.name.toLocaleLowerCase().includes(req.body.searchPhrase.toLocaleLowerCase()))
+//       : [];
+//     return res(
+//       ctx.status(200),
+//       ctx.json({
+//         students: matchingStudents,
+//       })
+//     );
+//   }),
+// ];
