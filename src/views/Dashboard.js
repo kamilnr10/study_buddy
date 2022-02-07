@@ -18,24 +18,25 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => {
       const groups = await getGroups();
-      console.log(groups);
+      // console.log(groups);
       setGroups(groups);
     })();
   }, [getGroups]);
 
   useEffect(() => {
     (async () => {
-      console.log(id);
+      // console.log(id);
 
       const students = await getStudents(id);
       setStudents(students);
-      console.log(students);
+      // console.log(students);
     })();
   }, [id, getStudents]);
 
   const handleOpenStudentDetails = async (id) => {
     const student = await getStudentById(id);
     setCurrenStudent(student);
+    console.log(student);
     handleOpenModal();
   };
 

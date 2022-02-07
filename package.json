@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mswjs/data": "^0.9.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -10,6 +11,7 @@
     "all": "^0.0.0",
     "downshift": "^6.1.7",
     "eslint-config-react-app": "^7.0.0",
+    "faker": "^6.6.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.2.0",
     "lodash.debounce": "^4.0.8",
@@ -58,6 +60,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/eslint-parser": "^7.16.5",
+    "@faker-js/faker": "^6.0.0-alpha.5",
     "axios-mock-adapter": "^1.20.0",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
