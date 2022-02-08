@@ -9,6 +9,7 @@ import settings from 'assets/icons/settings.png';
 import logout from 'assets/icons/logout.png';
 import card from 'assets/icons/card.png';
 import { SearchNav } from 'components/organisms/SearchBar/SearchBar';
+import { useAuth } from 'hooks/useAuth';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -68,6 +69,8 @@ const StyledLink = styled(NavLink)`
 `;
 
 const Navigation = () => {
+  const auth = useAuth();
+
   return (
     <NavWrapper>
       <StyledLink className={({ isActive }) => (isActive ? 'active' : '')} to="/groups/A">
@@ -82,7 +85,7 @@ const Navigation = () => {
       <StyledLink to="/settings">
         <img src={settings} alt="" />
       </StyledLink>
-      <StyledLink as="a" onClick={() => localStorage.removeItem('token')}>
+      <StyledLink as="a" onClick={auth.signOut}>
         <img src={logout} alt="" />
       </StyledLink>
     </NavWrapper>

@@ -1,10 +1,30 @@
 import React, { useCallback } from 'react';
 import axios from 'axios';
 
+const studentsAPI = axios.create({});
+
+// Add a request interceptor
+studentsAPI.interceptors.request.use(
+  (config) => {
+    // Do something before request is sent
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      config.headers.authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
 export const useStudents = () => {
   const getGroups = useCallback(async () => {
     try {
-      const result = await axios.get('/groups');
+      const result = await studentsAPI.get('/groups');
       console.log(result);
       return result.data.groups;
     } catch (err) {
@@ -14,7 +34,7 @@ export const useStudents = () => {
 
   const getStudents = useCallback(async (groupId) => {
     try {
-      const result = await axios.get(`/groups/${groupId}`);
+      const result = await studentsAPI.get(`/groups/${groupId}`);
       // console.log(result);
       return result.data.students;
     } catch (err) {
@@ -24,7 +44,7 @@ export const useStudents = () => {
 
   const getStudentById = useCallback(async (studentId) => {
     try {
-      const result = await axios.get(`/students/${studentId}`);
+      const result = await studentsAPI.get(`/students/${studentId}`);
       // console.log(result);
       return result.data.students;
     } catch (err) {
@@ -34,7 +54,7 @@ export const useStudents = () => {
 
   const findStudents = async (searchPhrase) => {
     try {
-      const { data } = await axios.post(`/students/search`, {
+      const { data } = await studentsAPI.post(`/students/search`, {
         searchPhrase,
       });
       return data;

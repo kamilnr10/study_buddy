@@ -15,6 +15,7 @@ import { Button } from 'components/atoms/Button/Button';
 import { useStudents } from 'hooks/useStudents';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useAuth } from 'hooks/useAuth';
 
 const AuthenticatedApp = () => {
   return (
@@ -32,7 +33,9 @@ const AuthenticatedApp = () => {
   );
 };
 
-const UnauthenticatedApp = ({ handleSignIn, loginError }) => {
+const UnauthenticatedApp = () => {
+  const auth = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -41,65 +44,22 @@ const UnauthenticatedApp = ({ handleSignIn, loginError }) => {
   } = useForm();
   // const onSubmit = ({ login, password }) => handleSignIn({ login, password });
 
-  console.log(watch('example')); // watch input value by passing the name of it
-
   return (
     <form
-      onSubmit={handleSubmit(handleSignIn)}
+      onSubmit={handleSubmit(auth.signIn)}
       style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
     >
       <FormField label="login" name="login" id="login" {...register('login')} />
       <FormField label="password" name="password" id="password" type="password" {...register('password')} />
       <Button type="submit">Sign in</Button>
-      {loginError && <span>{loginError}</span>}
     </form>
   );
 };
 
 const Root = () => {
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const auth = useAuth();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      (async () => {
-        try {
-          const response = await axios.get('/me', {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          });
-          setUser(response.data);
-        } catch (e) {
-          console.log(e);
-        }
-      })();
-    }
-  }, []);
-
-  const handleSignIn = async ({ login, password }) => {
-    try {
-      const response = await axios.post('/login', {
-        login,
-        password,
-      });
-      setUser(response.data);
-      localStorage.setItem('token', response.data.token);
-    } catch (e) {
-      console.log(e);
-      setError('Please provide valid user data');
-    }
-  };
-
-  return (
-    <Router>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        {user ? <AuthenticatedApp /> : <UnauthenticatedApp loginError={error} handleSignIn={handleSignIn} />}
-      </ThemeProvider>
-    </Router>
-  );
+  return auth.user ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 };
 
 export default Root;
